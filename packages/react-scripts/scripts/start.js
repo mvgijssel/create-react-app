@@ -32,10 +32,12 @@ var prompt = require('react-dev-utils/prompt');
 var pathExists = require('path-exists');
 var config = require('../config/webpack.config.dev');
 var paths = require('../config/paths');
+var getCustomConfig = require('../config/get-custom-config');
 
 var useYarn = pathExists.sync(paths.yarnLockFile);
 var cli = useYarn ? 'yarn' : 'npm';
 var isInteractive = process.stdout.isTTY;
+var customConfig = getCustomConfig(false);
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
@@ -194,7 +196,7 @@ function addMiddleware(devServer) {
     // - /*.hot-update.json (WebpackDevServer uses this too for hot reloading)
     // - /sockjs-node/* (WebpackDevServer uses this for hot reloading)
     // Tip: use https://jex.im/regulex/ to visualize the regex
-    var mayProxy = /^(?!\/(index\.html$|.*\.hot-update\.json$|sockjs-node\/)).*$/;
+    var mayProxy = /^(?!\/(static|index\.html$|.*\.hot-update\.(json|js)$|sockjs-node\/)).*$/;
 
     // Pass the scope regex both to Express and to the middleware for proxying
     // of both HTTP and WebSockets to work without false positives.
@@ -215,6 +217,11 @@ function addMiddleware(devServer) {
       ws: true
     });
     devServer.use(mayProxy, hpm);
+
+    if (customConfig.values.FULL_PROXY) {
+      var proxyLayer = devServer.app._router.stack.pop();
+      devServer.app._router.stack.unshift(proxyLayer);
+    }
 
     // Listen for the websocket 'upgrade' event and upgrade the connection.
     // If this is not done, httpProxyMiddleware will not try to upgrade until

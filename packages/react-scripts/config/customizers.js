@@ -73,5 +73,6 @@ module.exports = {
     getDev: function () {
       return paths.nodePaths;
     },
-  }
+  },
+  'FULL_PROXY': {}
 }
