@@ -1,6 +1,6 @@
 {
-  "name": "custom-react-scripts",
-  "version": "0.0.21",
+  "name": "@mvgijssel/custom-react-scripts",
+  "version": "0.0.1",
   "description": "Configuration and scripts for Create React App.",
   "repository": "https://npmjs.com/package/custom-react-scripts",
   "license": "BSD-3-Clause",
