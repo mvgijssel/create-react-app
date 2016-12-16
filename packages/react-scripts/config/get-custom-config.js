@@ -29,7 +29,8 @@ function getCustomConfig(prod) {
       plugins: [],
       loaders: [],
       values: {},
-      excludedFilesRegex: []
+      excludedFilesRegex: [],
+      nodePathIncludes: []
     });
 
   return result;

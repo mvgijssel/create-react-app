@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var paths = require('./paths');
 
 module.exports = {
   'BABEL_STAGE_0': {
@@ -66,5 +67,11 @@ module.exports = {
       dev: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss',
       prod: 'style!css?modules&-autoprefixer&importLoaders=1!postcss'
     }
+  },
+  'NODE_PATH_INCLUDES': {
+    toArray: 'nodePathIncludes',
+    getDev: function () {
+      return paths.nodePaths;
+    },
   }
 }
