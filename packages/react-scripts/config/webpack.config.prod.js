@@ -152,7 +152,7 @@ module.exports = {
       // Process JS with Babel.
       {
         test: /\.(js|jsx)$/,
-        include: paths.appSrc,
+        include: [paths.appSrc].concat(customConfig.nodePathIncludes[0]),
         loader: 'babel',
         // @remove-on-eject-begin
         query: {
